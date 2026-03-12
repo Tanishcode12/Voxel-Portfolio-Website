@@ -285,12 +285,41 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
 });
-function onPointerMove(event){
-    pointer.x = (event.clientX / sizes.width)*2-1;
-    pointer.y = -(event.clientY / sizes.height) * 2 + 1;
+function updatePointer(event) {
+    let x, y;
+
+    if (event.touches && event.touches.length > 0) {
+        // Mobile touch
+        x = event.touches[0].clientX;
+        y = event.touches[0].clientY;
+    } else {
+        // Desktop mouse
+        x = event.clientX;
+        y = event.clientY;
+    }
+
+    pointer.x = (x / sizes.width) * 2 - 1;
+    pointer.y = -(y / sizes.height) * 2 + 1;
 }
+
 function onClick() {
+    let moveTriggered = false;
+
+window.addEventListener("pointerdown", () => { moveTriggered = true; });
+window.addEventListener("pointermove", () => { moveTriggered = false; }); // If they move their finger, it's a camera orbit, not a move command
+
+window.addEventListener("pointerup", (e) => {
+    if (moveTriggered) {
+        updatePointer(e);
+        onClick();
+        onSceneClick();
+    }
+});
     raycaster.setFromCamera(pointer, camera);
+    const floorIntersect = allIntersects.find(hit => 
+    hit.object.name.toLowerCase().includes("floor") || 
+    hit.object.name.toLowerCase().includes("ground")
+);
     const intersects = raycaster.intersectObjects(intersectObjects, true);
     if (intersects.length > 0) {
         let target = intersects[0].object;
@@ -388,7 +417,8 @@ function onKeyDown(event) {
         moveCharacter(targetPosition, targetRotation);
     }
 }
-window.addEventListener("pointermove",onPointerMove)
+window.addEventListener("pointermove", updatePointer);
+window.addEventListener("touchstart", updatePointer, { passive: false });
 function onSceneClick(event) {
     // If the modal is open, don't move the character
     if (!modal.classList.contains('hidden')) return;
@@ -426,9 +456,11 @@ function onSceneClick(event) {
 }
 
 // Update your event listener
-window.addEventListener("click", (e) => {
-    onClick(e);      // Your board click logic
-    onSceneClick(e); // Your movement logic
+window.addEventListener("pointerdown", (e) => {
+    // Update pointer one last time to ensure it's exactly where the user pressed
+    updatePointer(e);
+    onClick();      // Your board click logic
+    onSceneClick(); // Your movement logic
 });
 window.addEventListener("keydown",onKeyDown)
 let isNight = false;
