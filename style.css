@@ -17,11 +17,6 @@
     width: 100%;
     height: 100%;
 }
-#experience-canvas {
-    touch-action: none; /* THIS IS THE MOST IMPORTANT LINE FOR MOBILE */
-    -webkit-user-select: none;
-    user-select: none;
-}
 /*utilities*/
 .hidden{
     display:none;
@@ -230,5 +225,50 @@ body.night-mode {
         font-size: 0.9rem;
         max-height: 250px;
     }
+}
+/* Mobile Controls Styling */
+#controls-wrapper {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none; /* Allows clicks to pass through empty space */
+}
 
+.horizontal-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    pointer-events: auto; /* Re-enable for the buttons */
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border: 2px solid var(--accent);
+    color: white;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-btn:active {
+    background: var(--accent);
+    transform: scale(0.9);
+}
+
+/* Hide on Desktop */
+@media (min-width: 769px) {
+    #controls-wrapper {
+        display: none;
+    }
 }
