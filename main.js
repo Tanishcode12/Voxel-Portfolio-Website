@@ -28,7 +28,7 @@ renderer.shadowMap.enabled= true;
 renderer.toneMapping= THREE.AgXToneMapping;
 renderer.toneMappingExposure=1
 const modalContent={
-    "board_legs001":{title: "About Me & My Education",
+    "board_legs001":{title: "About me & Education",
         content:`<p> Hi I am Tanish Thakur, I am a recent computer engineering graduate. In this page you will see my education, and in the following ones you will see my work experience and some notable projects I have done respectively!<br><p2><br><hr><br><h2>Education</h2><br><b style="display: flex; justify-content: space-between; align-items: baseline; width: 100%;"><span>Bachelor of Engineering, Specialization Honours Computer Engineering</span><span style="font-weight: bold; white-space: nowrap;">Aug 2025</span></b><p>York University,Toronto</p>`,
         link:""
     },
@@ -94,6 +94,21 @@ const modalContent={
         <li style="margin-bottom: 5px;">Trained TensorFlow-based system for lane tracking with 90% accuracy, integrating obstacle detection and smooth path navigation.</li></ul>
         `,
         link:"https://github.com/Tanishcode12"
+    },
+    "extra":{title: "This Project",
+        content:`<p>A game-like 3D portfolio built with Three.js where users explore an 
+        interactive environment to view education, experience, and projects. Features 
+        include a movable character, dynamic camera modes, day/night transitions with 
+        animated celestial bodies, object raycasting for interactive boards, and 
+        responsive controls for desktop and mobile devices.<br>
+        The character motion can be controlled by the arrow keys or w,a,s,d keys on laptop
+        for mobile devices there will be ui's for arrows to allow them to control the character.<br>
+        The top nav bar will allow the users to download my resume,view my about me section
+        ,education and experience. They can use the mail icon to get my email and the link icon
+        for my linkedin profile. <br>The sun icon just below will let the user change from day to night mode
+        and the lock icon below will let them choose between free camera and character perspective.<br>
+        Alternatively the character to the boards in the 3D environment and click on them for my about me,education,experience and projects respectively.</p>`,
+        link:""
     },
 }
 const modal= document.querySelector(".modal")
@@ -445,6 +460,7 @@ let isFreeCam = false;
 const cameraBtn = document.getElementById('camera-toggle');
 const lockIcon = cameraBtn.querySelector('.lock-icon');
 const freeIcon = cameraBtn.querySelector('.free-icon');
+
 cameraBtn.addEventListener('click', () => {
     isFreeCam = !isFreeCam;
     cameraBtn.classList.toggle('free-mode');
@@ -509,4 +525,10 @@ if (character.instance) {
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
-
+// Add this at the very end of your main.js file
+document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const modalId = btn.getAttribute('data-modal');
+        showModal(modalId);
+    });
+});
