@@ -351,11 +351,11 @@ body.night-mode {
 /* Container for the top-right controls to stack them neatly */
 .top-right-controls {
     position: fixed;
-    top: 80px; /* Push down to be below the Nav bar */
-    right: 20px;
+    top: 110px; /* Increased from 80px to avoid stacked nav */
+    right: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     z-index: 1005;
 }
 
@@ -374,10 +374,47 @@ body.night-mode {
     width: 100%;
     z-index: 1010;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.3);
+    flex-direction: column; /* Stack groups on mobile */
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6); /* Slightly darker for readability */
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(153, 170, 255, 0.2);
+    pointer-events: auto; 
 }
+
+.nav-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    overflow-x: auto; /* Allow horizontal scroll if buttons are too wide */
+    white-space: nowrap; /* Prevent buttons from wrapping to new lines */
+    padding-bottom: 5px; /* Space for scrollbar if it appears */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for a cleaner look while still allowing scrolling */
+.nav-group::-webkit-scrollbar {
+    display: none;
+}
+
+/* Desktop Adjustment */
+@media (min-width: 769px) {
+    .quick-nav {
+        flex-direction: row; /* Side-by-side on desktop */
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+}
+
+/* Ensure buttons don't shrink */
+.quick-nav button, .resume-dl {
+    flex-shrink: 0; 
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--accent);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
