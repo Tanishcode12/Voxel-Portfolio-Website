@@ -306,3 +306,78 @@ body.night-mode {
 .control-btn:active {
     background: #99aaff;
 }
+.quick-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1002;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    pointer-events: none; /* Let clicks pass through to 3D where there are no buttons */
+}
+
+.nav-group {
+    display: flex;
+    gap: 15px;
+    pointer-events: auto; /* Enable clicks for buttons */
+}
+
+.quick-nav button, .resume-dl {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--accent);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.quick-nav button:hover, .resume-dl:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5rem;
+}
+/* Container for the top-right controls to stack them neatly */
+.top-right-controls {
+    position: fixed;
+    top: 80px; /* Push down to be below the Nav bar */
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 1005;
+}
+
+/* Update your existing theme and camera buttons to remove their individual top/right positions */
+#theme-toggle, #camera-toggle {
+    position: static; /* Let the container handle positioning */
+    width: 50px;
+    height: 50px;
+}
+
+/* Refined Nav Bar */
+.quick-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1010;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(153, 170, 255, 0.2);
+}
