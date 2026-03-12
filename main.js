@@ -28,7 +28,7 @@ renderer.shadowMap.enabled= true;
 renderer.toneMapping= THREE.AgXToneMapping;
 renderer.toneMappingExposure=1
 const modalContent={
-    "board_legs001":{title: "About me & Education",
+    "board_legs001":{title: "About Me & My Education",
         content:`<p> Hi I am Tanish Thakur, I am a recent computer engineering graduate. In this page you will see my education, and in the following ones you will see my work experience and some notable projects I have done respectively!<br><p2><br><hr><br><h2>Education</h2><br><b style="display: flex; justify-content: space-between; align-items: baseline; width: 100%;"><span>Bachelor of Engineering, Specialization Honours Computer Engineering</span><span style="font-weight: bold; white-space: nowrap;">Aug 2025</span></b><p>York University,Toronto</p>`,
         link:""
     },
@@ -509,3 +509,4 @@ if (character.instance) {
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
+
