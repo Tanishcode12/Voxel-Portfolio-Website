@@ -5,7 +5,6 @@ import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 const scene = new THREE.Scene();
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
-// 1. Grab your existing canvas
 const canvas = document.getElementById("experience-canvas");
 const sizes = {
     width: window.innerWidth,
@@ -18,10 +17,9 @@ let character={
     isMoving:false,
     moveDuration:0.2
 }
-// 2. Initialize renderer using that canvas
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true // Optional: makes edges smoother
+    antialias: true 
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -128,18 +126,13 @@ const loader = new GLTFLoader();
 new RGBELoader()
     .load('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/venice_sunset_1k.hdr', function (texture) {
         texture.mapping = THREE.EquirectangularReflectionMapping;
-        // This line makes the metal reflect the HDR image
         scene.environment = texture;
-        // (Optional) This line makes the HDR the actual background of your scene
-        // scene.background = texture;
     });
-// 1. Create the Star Shell
 const starsGeometry = new THREE.BufferGeometry();
 const starsCount = 8000;
-const starDistance = 700; // Push them far away (beyond your floor)
+const starDistance = 700; 
 const posArray = new Float32Array(starsCount * 3);
 for (let i = 0; i < starsCount; i++) {
-    // Math to distribute points evenly on a sphere
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(2 * Math.random() - 1);
     const x = starDistance * Math.sin(phi) * Math.cos(theta);
@@ -150,25 +143,22 @@ for (let i = 0; i < starsCount; i++) {
     posArray[i * 3 + 2] = z;
 }
 starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-// 2. Use a Texture for "Round" Stars (Optional but looks better)
 const starsMaterial = new THREE.PointsMaterial({
     size: 1.5,
     color: 0xffffff,
     transparent: true,
-    opacity: 0, // Starts invisible for Day mode
-    sizeAttenuation: false ,// Keeps stars same size regardless of zoom
-    fog: false // <--- ADD THIS LINE
+    opacity: 0, 
+    sizeAttenuation: false ,
+    fog: false 
 });
 const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
 scene.add(starsMesh);
-// 1. Create the Sky Geometry (slightly smaller than stars so they don't overlap)
 const skyGeo = new THREE.SphereGeometry(650, 32, 32);
 const loader_sky = new THREE.TextureLoader();
-// 2. Load a sky texture
-const skyTexture = loader_sky.load('./1-converted-from-webp.jpg'); // You can replace this with any sky/cloud URL
+const skyTexture = loader_sky.load('./1-converted-from-webp.jpg'); 
 const skyMat = new THREE.MeshBasicMaterial({
     map: skyTexture,
-    side: THREE.BackSide, // Look at the INSIDE of the sphere
+    side: THREE.BackSide, 
     transparent: true,
     opacity: 1, // Starts visible for Day mode
     fog: false
@@ -178,13 +168,11 @@ scene.add(skyMesh);
 // Sun and Moon Group (to rotate them together)
 const celestialGroup = new THREE.Group();
 scene.add(celestialGroup);
-// The Sun
 const sunGeo = new THREE.SphereGeometry(15, 32, 32);
 const sunMat = new THREE.MeshBasicMaterial({ color: 0xffddaa });
 const sunMesh = new THREE.Mesh(sunGeo, sunMat);
 sunMesh.position.set(0, 200, -400); // High and far away
 celestialGroup.add(sunMesh);
-// The Moon
 const moonGeo = new THREE.SphereGeometry(10, 32, 32);
 const moonMat = new THREE.MeshBasicMaterial({ color: 0xccddee });
 const moonMesh = new THREE.Mesh(moonGeo, moonMat);
@@ -197,14 +185,11 @@ loader.load('./evenbetterportfolioforweb.glb', function (gltf) {
         const isCollider = child.name.toLowerCase().includes("collider");
         if (isLeg || isCollider) {
             collidableObjects.push(child);
-            // --- ADD THIS LINE BELOW ---
             if (isLeg) intersectObjects.push(child);
-            // ---------------------------
             if (isCollider) {
                 child.visible = false;
             }
         }
-        // ... rest of your traverse logic
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
@@ -215,16 +200,13 @@ loader.load('./evenbetterportfolioforweb.glb', function (gltf) {
     });
     scene.add(gltf.scene);
 }, undefined, console.error);
-// Create Sunlight
-const sunlight = new THREE.DirectionalLight(0xFFFFFF, 1); // Added intensity
+const sunlight = new THREE.DirectionalLight(0xFFFFFF, 1); 
 sunlight.position.set(-140, 180, 0);
-sunlight.castShadow = true; // <--- IMPORTANT: This tells the light to compute shadows
+sunlight.castShadow = true; 
 scene.add(sunlight);
 sunlight.target.position.set(-90,0,0)
 sunlight.shadow.mapSize.width=4096;
 sunlight.shadow.mapSize.height=4096;
-// 3. Setup Shadow Camera Properties
-// We need to make the "box" large enough to fit your portfolio model
 sunlight.shadow.camera.left = -260;
 sunlight.shadow.camera.right = 280;
 sunlight.shadow.camera.top = 240;
@@ -232,44 +214,24 @@ sunlight.shadow.camera.bottom = -240;
 sunlight.shadow.camera.near = 0.5;
 sunlight.shadow.camera.far = 500;
 sunlight.shadow.normalBias=0.2
-// Improve shadow quality (optional but recommended)
 sunlight.shadow.mapSize.width = 2048;
 sunlight.shadow.mapSize.height = 2048;
-//------
-// Helpers
 const shadowHelper = new THREE.CameraHelper(sunlight.shadow.camera);
 scene.add(shadowHelper);
 const helper = new THREE.DirectionalLightHelper(sunlight, 5);
 scene.add(helper);
 const light = new THREE.AmbientLight( 0x404040,10 ); // soft white light
 scene.add( light );
-//to light objects
-// const light1 = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
-// const helper1 = new THREE.HemisphereLightHelper( light1, 5 );
-// scene.add( helper1 );
-// 3. Setup Camera and Controls
-// const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
-// camera.position.z = 125.83932096103291;
-// camera.position.x=74.5511629479984;
-// camera.position.y=55.78403954211442
-//---good direction
-// const camera = new THREE.PerspectiveCamera(25, sizes.width / sizes.height, 0.1, 1000);
-// camera.position.z = 211.30417880111403;
-// camera.position.x=275.67493123133653 ;
-// camera.position.y=105.75506743559161
 const camera = new THREE.PerspectiveCamera(25, sizes.width / sizes.height, 0.1, 1000);
 camera.position.z = 168.53493884309344;
 camera.position.x=286.55327688350013 ;
 camera.position.y=147.88791849054408
 const controls = new OrbitControls(camera, canvas);
-// Optional: add damping for that "silky smooth" feel
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.touchEvents = true; // Ensures touch is captured
-// REMOVE THIS LINE: document.body.appendChild( renderer.domElement );
+controls.touchEvents = true; 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-// 4. Actually trigger the resize function
 modalExitButton.addEventListener("click",hideModal)
 window.addEventListener('resize', () => {
     sizes.width = window.innerWidth;
@@ -278,52 +240,19 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    // Change this:
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
-
-// To this (capping at 1.5 is often plenty for mobile and saves battery):
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1.5) : Math.min(window.devicePixelRatio, 2));
 });
-function updatePointer(event) {
-    let x, y;
-
-    if (event.touches && event.touches.length > 0) {
-        // Mobile touch
-        x = event.touches[0].clientX;
-        y = event.touches[0].clientY;
-    } else {
-        // Desktop mouse
-        x = event.clientX;
-        y = event.clientY;
-    }
-
-    pointer.x = (x / sizes.width) * 2 - 1;
-    pointer.y = -(y / sizes.height) * 2 + 1;
+function onPointerMove(event){
+    pointer.x = (event.clientX / sizes.width)*2-1;
+    pointer.y = -(event.clientY / sizes.height) * 2 + 1;
 }
-
 function onClick() {
-    let moveTriggered = false;
-
-window.addEventListener("pointerdown", () => { moveTriggered = true; });
-window.addEventListener("pointermove", () => { moveTriggered = false; }); // If they move their finger, it's a camera orbit, not a move command
-
-window.addEventListener("pointerup", (e) => {
-    if (moveTriggered) {
-        updatePointer(e);
-        onClick();
-        onSceneClick();
-    }
-});
     raycaster.setFromCamera(pointer, camera);
-    const floorIntersect = allIntersects.find(hit => 
-    hit.object.name.toLowerCase().includes("floor") || 
-    hit.object.name.toLowerCase().includes("ground")
-);
     const intersects = raycaster.intersectObjects(intersectObjects, true);
     if (intersects.length > 0) {
         let target = intersects[0].object;
-        // If the mesh itself isn't named "board_legs", check its parent
         while (target && !modalContent[target.name]) {
             target = target.parent;
         }
@@ -336,7 +265,6 @@ function moveCharacter(targetPosition,targetRotation){
     character.isMoving=true;
     const t1=gsap.timeline({onComplete:()=>{
         character.isMoving=false;
-        //character.instance.position.y-=character.jumpHeight
     }});
     t1.to(character.instance.position,{
         x:targetPosition.x,
@@ -353,16 +281,12 @@ function moveCharacter(targetPosition,targetRotation){
 }
 function checkCollision(targetPosition) {
     if (!character.instance) return false;
-    // Calculate direction from current position to target
     const direction = new THREE.Vector3()
         .subVectors(targetPosition, character.instance.position)
         .normalize();
-    // Fire ray from slightly above the feet (y + 0.5) to avoid hitting the floor
     const rayOrigin = character.instance.position.clone().add(new THREE.Vector3(0, 0.5, 0));
     raycaster.set(rayOrigin, direction);
-    // Check if we hit a collidable object within the move distance
     const hits = raycaster.intersectObjects(collidableObjects, true);
-    // If a hit is closer than our intended move distance, we are blocked
     if (hits.length > 0 && hits[0].distance < character.moveDistance) {
         return true;
     }
@@ -378,103 +302,105 @@ function updateGravity() {
         hit.object.traverseAncestors(ancestor => {
             if (ancestor === character.instance) isCharacter = true;
         });
-        // We also want to make sure we aren't snapping to invisible colliders
         return !isCharacter && hit.object !== character.instance && hit.object.visible === true;
     });
     if (actualFloor) {
-        // --- ADJUST THIS OFFSET ---
-        // If the feet are clipping, increase this number.
-        // If the character is floating, decrease it.
         const heightOffset = 5.0;
         character.instance.position.y = actualFloor.point.y + heightOffset;
     }
 }
-function onKeyDown(event) {
+function handleMoveInput(direction) {
     if (!character.instance || character.isMoving) return;
+
     const targetPosition = character.instance.position.clone();
     let targetRotation = 0;
-    switch (event.key.toLowerCase()) {
-        case "w": case "arrowup":
+
+    switch (direction) {
+        case "up":
             targetPosition.x -= character.moveDistance;
             targetRotation = -Math.PI / 2;
             break;
-        case "s": case "arrowdown":
+        case "down":
             targetPosition.x += character.moveDistance;
             targetRotation = Math.PI / 2;
             break;
-        case "a": case "arrowleft":
+        case "left":
             targetPosition.z += character.moveDistance;
             targetRotation = -Math.PI;
             break;
-        case "d": case "arrowright":
+        case "right":
             targetPosition.z -= character.moveDistance;
             targetRotation = 0;
             break;
-        default: return;
     }
-    // ONLY move if the path is clear
+
     if (!checkCollision(targetPosition)) {
         moveCharacter(targetPosition, targetRotation);
     }
 }
-window.addEventListener("pointermove", updatePointer);
-window.addEventListener("touchstart", updatePointer, { passive: false });
+window.addEventListener("pointermove",onPointerMove)
 function onSceneClick(event) {
-    // If the modal is open, don't move the character
     if (!modal.classList.contains('hidden')) return;
-
     raycaster.setFromCamera(pointer, camera);
-    
-    // 1. Check if we clicked a board (to open modal)
     const boardIntersects = raycaster.intersectObjects(intersectObjects, true);
     if (boardIntersects.length > 0) {
-        // Your existing click logic for boards will handle this
         return; 
     }
-
-    // 2. Otherwise, check if we clicked the floor/ground to move
     const allIntersects = raycaster.intersectObjects(scene.children, true);
     const floorIntersect = allIntersects.find(hit => 
         hit.object.name.toLowerCase().includes("floor") || 
         hit.object.name.toLowerCase().includes("ground")
     );
-
     if (floorIntersect && character.instance && !character.isMoving) {
         const targetPos = floorIntersect.point.clone();
-        
         // Calculate basic rotation to face the click
         const angle = Math.atan2(
             targetPos.x - character.instance.position.x, 
             targetPos.z - character.instance.position.z
         );
-        
-        // Move the character (reusing your existing move function)
-        // Note: You might need to adjust moveCharacter to accept a specific coordinate 
-        // rather than just a fixed distance, but this is the starting point!
         moveCharacter(targetPos, angle + Math.PI);
     }
 }
 
-// Update your event listener
-window.addEventListener("pointerdown", (e) => {
-    // Update pointer one last time to ensure it's exactly where the user pressed
-    updatePointer(e);
-    onClick();      // Your board click logic
-    onSceneClick(); // Your movement logic
+window.addEventListener("click", (e) => {
+    onClick(e);      // board click logic
+    //onSceneClick(e); //  movement logic
 });
-window.addEventListener("keydown",onKeyDown)
+window.addEventListener("keydown", (event) => {
+    switch (event.key.toLowerCase()) {
+        case "w": case "arrowup": handleMoveInput("up"); break;
+        case "s": case "arrowdown": handleMoveInput("down"); break;
+        case "a": case "arrowleft": handleMoveInput("left"); break;
+        case "d": case "arrowright": handleMoveInput("right"); break;
+    }
+});
+const mobileControls = {
+    "ctrl-up": "up",
+    "ctrl-down": "down",
+    "ctrl-left": "left",
+    "ctrl-right": "right"
+};
+
+Object.entries(mobileControls).forEach(([id, dir]) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+        // Use pointerdown for faster response on mobile
+        btn.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
+            handleMoveInput(dir);
+        });
+    }
+});
 let isNight = false;
 const themeBtn = document.getElementById('theme-toggle');
 function toggleTheme() {
     isNight = !isNight;
     document.body.classList.toggle('night-mode');
-   // themeBtn.textContent = isNight ? "Switch to Day" : "Switch to Night";
     gsap.to(celestialGroup.rotation, {
         x: isNight ? Math.PI : 0,
         duration: 2,
         ease: "power2.inOut"
     });
-    // Smoothly transition light colors and intensities
     gsap.to(sunlight.color, {
         r: isNight ? 0.6 : 1,
         g: isNight ? 0.7 : 1,
@@ -482,14 +408,13 @@ function toggleTheme() {
         duration: 1.5
     });
     gsap.to(light.color, {
-        r: isNight ? 0.12 : 0.25, // 0x202040 vs 0x404040
+        r: isNight ? 0.12 : 0.25, 
         g: isNight ? 0.12 : 0.25,
         b: isNight ? 0.25 : 0.25,
         duration: 1.5
     });
     gsap.to(renderer, { toneMappingExposure: isNight ? 0.5 : 1, duration: 1.5 });
     gsap.to(starsMaterial, { opacity: isNight ? 1 : 0, duration: 1.5 });
-    // Change background color
     gsap.to(scene.background, {
         r: isNight ? 0.01 : 0,
         g: isNight ? 0.01 : 0,
@@ -500,14 +425,12 @@ function toggleTheme() {
         opacity: isNight ? 0 : 1,
         duration: 2
     });
-    // Fade the Stars (Night)
     gsap.to(starsMaterial, {
         opacity: isNight ? 1 : 0,
         duration: 2
     });
     gsap.to(skyMat, { opacity: isNight ? 0 : 1, duration: 2 });
     gsap.to(starsMaterial, { opacity: isNight ? 1 : 0, duration: 2 });
-    // Smoothly shift the lights
     gsap.to(sunlight.color, {
         r: isNight ? 0.6 : 1,
         g: isNight ? 0.7 : 1,
@@ -517,27 +440,21 @@ function toggleTheme() {
     gsap.to(renderer, { toneMappingExposure: isNight ? 0.5 : 1, duration: 1.5 });
 }
 themeBtn.addEventListener('click', toggleTheme);
-// Initialize background color so GSAP can animate it
-scene.background = new THREE.Color(0x000000);
+scene.background = new THREE.Color(0x000000);// Initialize background color so GSAP can animate it
 let isFreeCam = false;
 const cameraBtn = document.getElementById('camera-toggle');
 const lockIcon = cameraBtn.querySelector('.lock-icon');
 const freeIcon = cameraBtn.querySelector('.free-icon');
-
 cameraBtn.addEventListener('click', () => {
     isFreeCam = !isFreeCam;
-    
-    // UI Updates
     cameraBtn.classList.toggle('free-mode');
     lockIcon.classList.toggle('hidden');
     freeIcon.classList.toggle('hidden');
 
     if (isFreeCam) {
-        // When entering Free Cam, allow the user to zoom out further/rotate freely
         controls.enablePan = true; 
         controls.maxDistance = 1000;
     } else {
-        // When returning, you might want to reset zoom limits
         controls.enablePan = false; 
         controls.maxDistance = 300; 
     }
@@ -548,32 +465,23 @@ function animate(time) {
     intersectObjects.forEach(obj => {
         if (obj.material) {
             obj.material.emissiveIntensity = 0;
-            // Optionally reset the color, though Intensity 0 makes color invisible
             obj.material.emissive = new THREE.Color(0x000000); 
         }
     });
-
     if (intersects.length > 0) {
         document.body.style.cursor = "pointer";
-        
-        // Find the specific object being hovered
-        const hoveredBoard = intersects[0].object;
-
+                const hoveredBoard = intersects[0].object;
         if (isNight) {
-            // NIGHT MODE: Apply the blue glow
             if (hoveredBoard.material) {
                 hoveredBoard.material.emissive = new THREE.Color(0x99aaff);
                 hoveredBoard.material.emissiveIntensity = 0.5;
             }
-            // Rotate stars slightly
             starsMesh.rotation.y += 0.0001;
             starsMesh.rotation.x += 0.00005;
         } else {
-            // DAY MODE: Original look (No emissive glow)
             if (hoveredBoard.material) {
                 hoveredBoard.material.emissiveIntensity = 0;
             }
-            // Move clouds/sky
             if (skyTexture) {
                 skyTexture.offset.x += 0.00005;
             }
@@ -581,20 +489,6 @@ function animate(time) {
     } else {
         document.body.style.cursor = "default";
     }
-   // console.log(camera.position)
-    // Required if enableDamping is true
-// if (character.instance) {
-//         // 1. Target Position: Increase these to pull the camera further away
-//         // Current: (50, 40, 50) -> Increase these for "Further", Decrease for "Closer"
-//         const cameraDistance = new THREE.Vector3(100, 90, 100);
-//         const targetCameraPos = character.instance.position.clone().add(cameraDistance);
-//         // 2. Smoothly follow the character
-//         // 0.05 is the "drag" feel. Use 1.0 if you want it to snap instantly.
-//         camera.position.lerp(targetCameraPos, 0.05);
-//         // 3. Aim at the character's torso (height of 2-5) rather than their feet
-//         const lookAtTarget = character.instance.position.clone().add(new THREE.Vector3(0, 3, 0));
-//         controls.target.lerp(lookAtTarget, 0.05);
-//     }
 if (character.instance) {
         if (!isFreeCam) {
             // --- FOLLOW MODE ---
@@ -607,8 +501,6 @@ if (character.instance) {
             controls.target.lerp(lookAtTarget, 0.05);
         } else {
             // --- FREE CAM MODE ---
-            // We do nothing! OrbitControls takes over completely.
-            // The camera stays wherever the user drags it.
         }
     }
 
