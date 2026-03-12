@@ -10,17 +10,19 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+<div class="top-right-controls">
     <button id="theme-toggle" class="theme-btn">
-       <div class="icon-container">
-           <span class="sun-icon">☀️</span>
-          <span class="moon-icon">🌙</span>
-      </div>
+        <div class="icon-container">
+            <span class="sun-icon">☀️</span>
+            <span class="moon-icon">🌙</span>
+        </div>
     </button>
 
     <button id="camera-toggle" class="camera-btn">
         <span class="lock-icon">🔒</span>
         <span class="free-icon hidden">✈️</span>
     </button>
+</div>
     <div id="controls-wrapper">
        <button class="control-btn up" id="ctrl-up">▲</button>
       <div class="horizontal-controls">
@@ -31,6 +33,24 @@
     </div>
 </button>
 </button>
+<nav class="quick-nav">
+    <div class="nav-group">
+        <button class="nav-btn" data-modal="board_legs001">Education</button>
+        <button class="nav-btn" data-modal="board_legs">Experience</button>
+        <button class="nav-btn" data-modal="board_legs002">Projects</button>
+        <button class="nav-btn" data-modal="extra">This Website</button>
+    </div>
+    <div class="nav-group">
+        <a href="./Resume - Tanish Thakur.pdf" target="_blank" rel="noreferrer" class="resume-dl">Download PDF</a>
+        <div class="social-icons">
+            <a href="mailto:tanishthakur384@email.com" title="Email Me"><img src="./Gmail_icon_(2020).svg.png" alt="Gmail" width="40" height="30"></a>
+            <a href="https://www.linkedin.com/in/tanish-thakur-a96a59271/" target="_blank" rel="noreferrer"><img src="./linkedin-logo-free-download-free-png (1).jpg" alt="LinkedIn Profile" width="30" height="30"></a>
+            <a href="https://github.com/Tanishcode12" target="_blank" rel="noreferrer"><img src="./github.png" alt="Github Profile" width="30" height="30"></a>
+            <!-- <a href="mailto:tanishthakur384@email.com" title="Email Me">✉️</a>
+            <a href="https://www.linkedin.com/in/tanish-thakur-a96a59271/" target="_blank" rel="noreferrer">🔗</a> -->
+        </div>
+    </div>
+</nav>
     <div id="experience">
         <canvas id="experience-canvas"></canvas>
     </div>
