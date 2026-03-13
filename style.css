@@ -411,23 +411,37 @@ body.night-mode {
     position: fixed;
     top: 60px; /* Below the theme toggle */
      /*right: 20px;} */
-    #camera-toggle {
+    /* #camera-toggle {
     position: fixed;
     /* bottom: 30px;     /* The one at the very bottom */
-    right: 20px;
-}
-
+    /* right: 20px;
+} */
+/* 
 #theme-toggle {
-    position: fixed;
+    position: fixed; */
     /* bottom: 130px;    /* 20px (gap) + 100px (height of camera-toggle) + 10px (extra spacing) */ 
-    right: 20px;
-}
+    /* right: 20px;
+} */ 
 /* #theme-toggle, #camera-toggle {
     position: static;
     width: 50px;
     height: 50px;
     margin-top: 20px; 
 } 
+*/
+#theme-toggle, #camera-toggle {
+        position: static; 
+        margin: 0;
+    }
+
+    /* 2. Create a container for the bottom-right corner */
+    .top-right-controls {
+        top: auto;          /* Remove top alignment */
+        bottom: 20px;       /* Stick to bottom */
+        right: 20px;        /* Stick to right */
+        flex-direction: column-reverse; /* Put Camera on top of Theme or vice versa */
+        gap: 15px;
+    }
     /* Mobile Controls Styling */
 #controls-wrapper {
     position: fixed;
