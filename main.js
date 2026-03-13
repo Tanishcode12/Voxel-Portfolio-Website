@@ -536,21 +536,10 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 
 const menuToggle = document.getElementById('menu-toggle');
 const navMenu = document.getElementById('nav-menu');
-const menuIcon = menuToggle.querySelector('i');
 
 menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
     navMenu.classList.toggle('active');
-    
-    // Check if the menu is now open
-    if (navMenu.classList.contains('active')) {
-        // Change to X
-        menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-xmark');
-    } else {
-        // Change back to 3 lines
-        menuIcon.classList.remove('fa-xmark');
-        menuIcon.classList.add('fa-bars');
-    }
 });
 
 // Close menu when a button is clicked
@@ -560,4 +549,3 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
         navMenu.classList.remove('active');
     });
 });
-
