@@ -539,12 +539,14 @@ const navMenu = document.getElementById('nav-menu');
 
 menuToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
+    menuToggle.classList.toggle('active'); // Added this line to swap symbols
 });
 
 // Close menu when a navigation button is clicked
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         navMenu.classList.remove('active');
+        menuToggle.classList.remove('active'); // Reset button to hamburger
     });
 });
 
