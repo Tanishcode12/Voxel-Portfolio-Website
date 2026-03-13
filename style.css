@@ -400,24 +400,32 @@ body.night-mode {
 @media (max-width: 768px) {
  /* --- HAMBURGER BUTTON --- */
 .menu-toggle {
-    display: none; /* Hidden on desktop */
-    background: transparent;
-    border: none;
-    color: var(--accent); /* Uses your #99aaff */
-    font-size: 1.8rem;    /* Size of the icon */
-    cursor: pointer;
-    z-index: 1011;
-    transition: transform 0.3s ease;
-}
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--accent); /* Using your #99aaff */
+        font-size: 2.5rem;    /* Large enough to see clearly */
+        cursor: pointer;
+        pointer-events: auto;
+        z-index: 1100;
+        line-height: 1;
+    }
 
-    .menu-toggle .bar {
-    width: 100%;
-    height: 3px;
-    background-color: var(--accent); /* Uses your #99aaff color */
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-    display: block; /* Ensures they render as blocks */
-}
+    /* Logic to show/hide the spans */
+    .menu-toggle .close {
+        display: none;
+    }
+
+    /* When the menu is open (active) */
+    .menu-toggle.active .hamburger {
+        display: none;
+    }
+
+    .menu-toggle.active .close {
+        display: block;
+    }
 
     .nav-menu {
         /* This turns the menu into a hidden vertical drawer */
@@ -455,39 +463,5 @@ body.night-mode {
         width: 100%;
         text-align: left;
     }
-
-
-
-/* --- MOBILE LAYOUT --- */
-/* Container for the lines */
-.hamburger-lines {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-}
-
-/* The actual lines */
-.hamburger-lines span {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: var(--accent);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-/* Mobile visibility check */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex;
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        pointer-events: auto; /* Ensures the button is clickable */
-    }
-}
 }
 }
