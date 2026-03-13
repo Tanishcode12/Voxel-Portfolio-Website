@@ -459,21 +459,34 @@ body.night-mode {
 
 
 /* --- MOBILE LAYOUT --- */
+/* Container for the lines */
+.hamburger-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+}
+
+/* The actual lines */
+.hamburger-lines span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--accent);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Mobile visibility check */
 @media (max-width: 768px) {
     .menu-toggle {
-        display: flex; /* Ensure it shows on mobile */
+        display: flex;
         background: transparent;
         border: none;
-        color: var(--accent);
-        font-size: 2rem;
         cursor: pointer;
-        z-index: 1011;
-        pointer-events: auto; /* Crucial since nav has pointer-events: none */
-    }
-
-    /* Keep the three lines simple, no complex animation needed */
-    .menu-toggle.active {
-        color: var(--accent);
+        padding: 5px;
+        pointer-events: auto; /* Ensures the button is clickable */
     }
 }
 }
