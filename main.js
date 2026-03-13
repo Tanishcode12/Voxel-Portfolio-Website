@@ -533,12 +533,26 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
     });
 });
 
+
 const menuToggle = document.getElementById('menu-toggle');
 const navMenu = document.getElementById('nav-menu');
+const menuIcon = document.getElementById('menu-icon');
 
 menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
+    // Toggle the menu visibility
     navMenu.classList.toggle('active');
+    
+    // Toggle the button's active state for CSS rotation
+    menuToggle.classList.toggle('active');
+
+    // Swap the icon between Bars and X
+    if (menuToggle.classList.contains('active')) {
+        menuIcon.classList.remove('fa-bars');
+        menuIcon.classList.add('fa-xmark');
+    } else {
+        menuIcon.classList.remove('fa-xmark');
+        menuIcon.classList.add('fa-bars');
+    }
 });
 
 // Close menu when a button is clicked
@@ -548,3 +562,4 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
         navMenu.classList.remove('active');
     });
 });
+
