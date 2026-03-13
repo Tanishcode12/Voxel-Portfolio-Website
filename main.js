@@ -521,11 +521,10 @@ if (character.instance) {
     }
 
     updateGravity();
-    controls.update(); // This must run for both modes
+    controls.update(); 
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
-// Add this at the very end of your main.js file
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const modalId = btn.getAttribute('data-modal');
