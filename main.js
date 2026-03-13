@@ -521,11 +521,10 @@ if (character.instance) {
     }
 
     updateGravity();
-    controls.update(); // This must run for both modes
+    controls.update(); 
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
-// Add this at the very end of your main.js file
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const modalId = btn.getAttribute('data-modal');
@@ -539,13 +538,10 @@ const navMenu = document.getElementById('nav-menu');
 const menuIcon = document.getElementById('menu-icon');
 
 menuToggle.addEventListener('click', () => {
-    // Toggle the menu visibility
     navMenu.classList.toggle('active');
     
-    // Toggle the button's active state for CSS rotation
     menuToggle.classList.toggle('active');
 
-    // Swap the icon between Bars and X
     if (menuToggle.classList.contains('active')) {
         menuIcon.classList.remove('fa-bars');
         menuIcon.classList.add('fa-xmark');
@@ -555,7 +551,6 @@ menuToggle.addEventListener('click', () => {
     }
 });
 
-// Close menu when a button is clicked
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         menuToggle.classList.remove('active');
