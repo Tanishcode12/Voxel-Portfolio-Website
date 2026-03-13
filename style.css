@@ -398,6 +398,22 @@ body.night-mode {
 
 /* --- MOBILE LAYOUT (Only kicks in below 768px) --- */
 @media (max-width: 768px) {
+    #theme-toggle {
+    position: fixed;
+    top: 0px;
+    right: 20px;}
+    /* Mobile Controls Styling */
+#controls-wrapper {
+    position: fixed;
+    bottom: 30px;
+    left: 60px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none; /* Allows clicks to pass through empty space */
+}
  /* --- HAMBURGER BUTTON --- */
 .menu-toggle {
         display: flex;
