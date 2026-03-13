@@ -6,11 +6,11 @@
 }
 
 body {
-    overflow: hidden; /* Prevents scrolling so the 3D scene feels like an app */
+    overflow: hidden; 
     font-family: 'Pixelify Sans', sans-serif;
     background-color: #000;
     color: #fff;
-    -webkit-tap-highlight-color: transparent; /* Cleaner feel on mobile */
+    -webkit-tap-highlight-color: transparent;
 }
 
 #experience-canvas {
@@ -20,12 +20,14 @@ body {
     outline: none;
 }
 
-/* --- 2. Top Controls (Theme & Camera) --- */
+/* --- 2. Top Right Controls (Theme & Camera) --- */
+/* Adjusted top to avoid overlapping with the new Nav Bar */
 .top-right-controls {
     position: fixed;
-    top: 20px;
+    top: 80px; 
     right: 20px;
     display: flex;
+    flex-direction: column;
     gap: 10px;
     z-index: 100;
 }
@@ -43,193 +45,191 @@ body {
     transition: transform 0.2s;
 }
 
-.theme-btn:active, .camera-btn:active {
-    transform: scale(0.9);
-}
-
-/* --- 3. Mobile Movement Controls (DPAD) --- */
-#controls-wrapper {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    z-index: 90;
-}
-
-.horizontal-controls {
-    display: flex;
-    gap: 5px;
-}
-
-.control-btn {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid #fff;
-    color: white;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Hide DPAD on desktop - users use WASD */
-@media (min-width: 769px) {
-    #controls-wrapper {
-        display: none;
-    }
-}
-
-/* --- 4. Main Navigation (Hamburger logic) --- */
+/* --- 3. Main Navigation (Top Bar) --- */
 .quick-nav {
     position: fixed;
-    bottom: 30px;
-    right: 30px; /* Moved to right to avoid overlap with DPAD on mobile */
+    top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
+    padding: 15px;
 }
 
+/* The Hamburger Button (Mobile Only) */
 .menu-toggle {
-    display: flex;
+    display: none; /* Hidden on desktop */
     flex-direction: column;
     justify-content: space-around;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 40px;
     background: #000;
-    border: 3px solid #fff;
-    padding: 12px;
+    border: 2px solid #fff;
+    padding: 8px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .menu-toggle .bar {
     width: 100%;
-    height: 4px;
+    height: 3px;
     background-color: white;
     transition: 0.3s;
 }
 
+/* The Menu Box */
 .nav-menu {
     display: flex;
-    gap: 15px;
-    background: rgba(0, 0, 0, 0.9);
-    border: 3px solid #fff;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px; /* Sits above the toggle */
+    gap: 25px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 12px 30px;
+    border-radius: 0 0 20px 20px; /* Rounded bottom for top bar */
+    border: 2px solid #fff;
+    border-top: none;
 }
 
-/* Mobile State */
+/* --- Mobile Specific Logic --- */
 @media (max-width: 768px) {
+    .quick-nav {
+        align-items: flex-end; /* Align hamburger to the right */
+        padding-right: 20px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
     .nav-menu {
-        display: none; /* Hidden by default */
+        display: none; 
         flex-direction: column;
-        min-width: 180px;
+        position: absolute;
+        top: 70px; /* Drop down from the top */
+        right: 20px;
+        min-width: 200px;
+        border-radius: 12px;
+        border: 2px solid #fff;
+        padding: 20px;
+        gap: 15px;
     }
 
     .nav-menu.active {
-        display: flex; /* Shown when JS toggles it */
+        display: flex;
+        animation: fadeInDown 0.3s ease-out;
     }
 
     .nav-group {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        width: 100%;
+        gap: 15px;
+        align-items: center;
     }
 
     .social-icons {
         display: flex;
-        justify-content: center;
         gap: 15px;
         margin-top: 10px;
     }
 
-    /* Animate Hamburger to X */
-    .menu-toggle.active .bar:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+    /* Hamburger Animation to X */
+    .menu-toggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
     .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
-    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+    .menu-toggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 }
 
-/* Desktop State */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Laptop/Desktop Specific Logic --- */
 @media (min-width: 769px) {
-    .quick-nav {
-        right: 50%;
-        transform: translateX(50%);
-        flex-direction: row;
-    }
-
-    .menu-toggle {
-        display: none; /* Hide hamburger */
-    }
-
     .nav-menu {
         display: flex !important;
         flex-direction: row;
-        margin-bottom: 0;
-        border-radius: 50px;
         align-items: center;
     }
 
     .nav-group {
         display: flex;
         flex-direction: row;
+        gap: 25px;
         align-items: center;
-        gap: 20px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-left: 20px;
+        padding-left: 20px;
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
     }
 }
 
-/* --- 5. Buttons & Links Styling --- */
+/* --- 4. Buttons & Modal (Unchanged functionality) --- */
 .nav-btn, .resume-dl {
     background: transparent;
     border: none;
     color: #fff;
     font-family: inherit;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
     text-decoration: none;
-    transition: color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.nav-btn:hover, .resume-dl:hover {
-    color: #aaa;
+.nav-btn:hover {
+    color: #00ffcc; /* Add a slight highlight for desktop hover */
 }
 
-/* --- 6. Modal Styling --- */
+#controls-wrapper {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 90;
+}
+
+@media (min-width: 769px) {
+    #controls-wrapper { display: none; }
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #fff;
+    color: #fff;
+    border-radius: 8px;
+}
+
+/* Modal Styling */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(0,0,0,0.85);
     z-index: 2000;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.modal.hidden {
-    display: none;
-}
+.modal.hidden { display: none; }
 
 .modal-wrapper {
     background: #111;
-    border: 4px solid #fff;
-    width: 100%;
+    border: 3px solid #fff;
+    width: 90%;
     max-width: 600px;
     max-height: 80vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .modal-header {
@@ -237,23 +237,17 @@ body {
     border-bottom: 2px solid #fff;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.modal-exit-button {
-    background: #f00;
-    color: #fff;
-    border: 2px solid #fff;
-    padding: 5px 10px;
-    cursor: pointer;
 }
 
 .modal-content {
     padding: 20px;
     overflow-y: auto;
-    line-height: 1.6;
 }
 
-.hidden {
-    display: none !important;
+.modal-exit-button {
+    background: #ff4444;
+    border: 1px solid #fff;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
 }
