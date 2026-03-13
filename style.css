@@ -398,10 +398,19 @@ body.night-mode {
 
 /* --- MOBILE LAYOUT (Only kicks in below 768px) --- */
 @media (max-width: 768px) {
-    #theme-toggle {
+    /* #theme-toggle {
     position: fixed;
     top: 0px;
     right: 20px;}
+    #camera-toggle {
+    position: fixed;
+    top: 90px; /* Below the theme toggle */
+    /* right: 20px;} */
+    #theme-toggle, #camera-toggle {
+    position: static; /* Let the container handle positioning */
+    width: 50px;
+    height: 100px;
+}
     /* Mobile Controls Styling */
 #controls-wrapper {
     position: fixed;
