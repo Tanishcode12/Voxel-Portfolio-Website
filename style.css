@@ -461,14 +461,19 @@ body.night-mode {
 /* --- MOBILE LAYOUT --- */
 @media (max-width: 768px) {
     .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; /* Ensure it shows on mobile */
+        background: transparent;
+        border: none;
+        color: var(--accent);
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 1011;
+        pointer-events: auto; /* Crucial since nav has pointer-events: none */
     }
 
-    /* Rotation effect when active */
+    /* Keep the three lines simple, no complex animation needed */
     .menu-toggle.active {
-        transform: rotate(90deg);
+        color: var(--accent);
     }
 }
 }
