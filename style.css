@@ -311,12 +311,15 @@ body.night-mode {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1002;
+    z-index: 1010;
     display: flex;
-    justify-content: space-between;
-    padding: 15px 25px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
-    pointer-events: none; /* Let clicks pass through to 3D where there are no buttons */
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(153, 170, 255, 0.2);
+    min-height: 60px;
+    pointer-events: auto;
 }
 
 .nav-group {
@@ -367,22 +370,7 @@ body.night-mode {
 }
 
 /* Refined Nav Bar */
-/* --- BASE NAV (Shared) --- */
-.quick-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1010;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(153, 170, 255, 0.2);
-    min-height: 60px;
-    pointer-events: auto;
-}
+
 
 /* --- DESKTOP LAYOUT (Default) --- */
 .nav-menu {
