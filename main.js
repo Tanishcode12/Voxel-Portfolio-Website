@@ -536,20 +536,18 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 
 const menuToggle = document.getElementById('menu-toggle');
 const navMenu = document.getElementById('nav-menu');
-const menuIcon = document.getElementById('menu-icon');
+const menuIcon = menuToggle.querySelector('i');
 
 menuToggle.addEventListener('click', () => {
-    // Toggle the menu visibility
     navMenu.classList.toggle('active');
     
-    // Toggle the button's active state for CSS rotation
-    menuToggle.classList.toggle('active');
-
-    // Swap the icon between Bars and X
-    if (menuToggle.classList.contains('active')) {
+    // Check if the menu is now open
+    if (navMenu.classList.contains('active')) {
+        // Change to X
         menuIcon.classList.remove('fa-bars');
         menuIcon.classList.add('fa-xmark');
     } else {
+        // Change back to 3 lines
         menuIcon.classList.remove('fa-xmark');
         menuIcon.classList.add('fa-bars');
     }
