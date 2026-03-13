@@ -539,16 +539,13 @@ const navMenu = document.getElementById('nav-menu');
 const menuIcon = document.getElementById('menu-icon');
 
 menuToggle.addEventListener('click', () => {
-    // Toggle the menu visibility
     navMenu.classList.toggle('active');
-    
-    // Toggle the button's active state for CSS rotation
     menuToggle.classList.toggle('active');
 
-    // Swap the icon between Bars and X
-    if (menuToggle.classList.contains('active')) {
+    // Logic to swap the icon
+    if (navMenu.classList.contains('active')) {
         menuIcon.classList.remove('fa-bars');
-        menuIcon.classList.add('fa-xmark');
+        menuIcon.classList.add('fa-xmark'); // Or 'fa-times' if using FontAwesome 4
     } else {
         menuIcon.classList.remove('fa-xmark');
         menuIcon.classList.add('fa-bars');
