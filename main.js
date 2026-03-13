@@ -521,29 +521,30 @@ if (character.instance) {
     }
 
     updateGravity();
-    controls.update(); // This must run for both modes
+    controls.update(); 
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
-// Add this at the very end of your main.js file
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const modalId = btn.getAttribute('data-modal');
         showModal(modalId);
     });
 });
+
+
 const menuToggle = document.getElementById('menu-toggle');
 const navMenu = document.getElementById('nav-menu');
 
 menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
     navMenu.classList.toggle('active');
+    menuToggle.classList.toggle('active'); // Added this line to swap symbols
 });
-
-// Close menu when a button is clicked
+// Close menu when a navigation button is clicked
 document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
         navMenu.classList.remove('active');
+        menuToggle.classList.remove('active'); // Reset button to hamburger
     });
 });
+
