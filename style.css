@@ -413,18 +413,14 @@ body.night-mode {
      /*right: 20px;} */
     #camera-toggle {
     position: fixed;
-    bottom: 20px;     /* The one at the very bottom */
+    bottom: 30px;     /* The one at the very bottom */
     right: 20px;
-    width: 50px;
-    height: 100px;
 }
 
 #theme-toggle {
     position: fixed;
     bottom: 130px;    /* 20px (gap) + 100px (height of camera-toggle) + 10px (extra spacing) */
     right: 20px;
-    width: 50px;
-    height: 100px;
 }
 /* #theme-toggle, #camera-toggle {
     position: static;
