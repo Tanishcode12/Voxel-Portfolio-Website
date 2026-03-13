@@ -398,17 +398,16 @@ body.night-mode {
 
 /* --- MOBILE LAYOUT (Only kicks in below 768px) --- */
 @media (max-width: 768px) {
-    .menu-toggle {
-    display: none; /* Default hidden for desktop */
-    flex-direction: column;
-    justify-content: space-between; /* Spaces the 3 bars evenly */
-    width: 30px;
-    height: 22px;
+ /* --- HAMBURGER BUTTON --- */
+.menu-toggle {
+    display: none; /* Hidden on desktop */
     background: transparent;
     border: none;
+    color: var(--accent); /* Uses your #99aaff */
+    font-size: 1.8rem;    /* Size of the icon */
     cursor: pointer;
-    padding: 0;
     z-index: 1011;
+    transition: transform 0.3s ease;
 }
 
     .menu-toggle .bar {
@@ -457,32 +456,20 @@ body.night-mode {
         text-align: left;
     }
 
-    /* X Animation for Hamburger */
-   .menu-toggle.active .bar:nth-child(1) {
-    transform: translateY(9.5px) rotate(45deg);
-}
 
-.menu-toggle.active .bar:nth-child(2) {
-    opacity: 0;
-    transform: translateX(-20px); /* Slides the middle bar out */
-}
 
-.menu-toggle.active .bar:nth-child(3) {
-    transform: translateY(-9.5px) rotate(-45deg);
-}
+/* --- MOBILE LAYOUT --- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-/* --- MOBILE VISIBILITY --- */
-.menu-toggle.active .bar:nth-child(1) {
-    transform: translateY(9.5px) rotate(45deg);
-}
-
-.menu-toggle.active .bar:nth-child(2) {
-    opacity: 0;
-    transform: translateX(-20px); /* Slides the middle bar out */
-}
-
-.menu-toggle.active .bar:nth-child(3) {
-    transform: translateY(-9.5px) rotate(-45deg);
+    /* Rotation effect when active */
+    .menu-toggle.active {
+        transform: rotate(90deg);
+    }
 }
 }
 }
