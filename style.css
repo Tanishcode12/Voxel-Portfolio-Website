@@ -4,6 +4,7 @@
     box-sizing: border-box;
     font-family: "Pixelify Sans",sans-serif;
 }
+/*experience*/
 #experience{
     position: fixed;
     height: 100%;
@@ -16,9 +17,13 @@
     width: 100%;
     height: 100%;
 }
+/*utilities*/
 .hidden{
     display:none;
 }
+/*modal*/
+/* Toggle Button Style */
+/*updated for button visual*/
 #theme-toggle {
     position: fixed;
     top: 20px;
@@ -26,12 +31,12 @@
     z-index: 1000;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 50%; /* Circular button */
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
     border: 2px solid var(--accent);
     cursor: pointer;
-    overflow: hidden;
+    overflow: hidden; /* Clips the icons as they slide */
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
@@ -48,7 +53,7 @@
     width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column; /* Stack icons vertically */
     align-items: center;
     justify-content: center;
     transition: transform 0.5s ease;
@@ -60,9 +65,10 @@
     transition: opacity 0.3s, transform 0.5s;
 }
 
+/* Day State (Default) */
 .moon-icon {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(40px); /* Hide moon below */
 }
 
 .sun-icon {
@@ -70,14 +76,15 @@
     transform: translateY(0);
 }
 
+/* Night State Transitions */
 body.night-mode .sun-icon {
     opacity: 0;
-    transform: translateY(-40px); 
+    transform: translateY(-40px); /* Push sun up */
 }
 
 body.night-mode .moon-icon {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0); /* Bring moon to center */
 }
 
 body.night-mode #theme-toggle {
@@ -132,7 +139,7 @@ body.night-mode {
     background-color: var(--modal-bg);
     border: 4px solid var(--modal-border);
     color: var(--text-color);
-    backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px); /* Nice glass effect for night mode */
     padding: 20px;
 }
 
@@ -144,7 +151,7 @@ body.night-mode {
 }
 #camera-toggle {
     position: fixed;
-    top: 90px; 
+    top: 90px; /* Below the theme toggle */
     right: 20px;
     z-index: 1000;
     width: 60px;
@@ -166,12 +173,18 @@ body.night-mode {
     color: #14141e;
 }
 .modal-content {
+    /* Set a maximum height so it doesn't go off-screen */
     max-height: 300px; 
+    
+    /* This is the magic line: */
+    /* 'auto' means show scrollbar ONLY if text is too long */
     overflow-y: auto; 
-    padding-right: 10px; 
+    
+    padding-right: 10px; /* Space for the scrollbar */
     margin-top: 10px;
 }
 
+/* Custom Scrollbar Styling (Optional but makes it look 'Pro') */
 .modal-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -185,10 +198,11 @@ body.night-mode {
     background: var(--accent);
     border-radius: 10px;
 }
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     .modal {
         width: 90%;
-        max-height: 80vh; 
+        max-height: 80vh; /* Don't let modal cover the whole screen height */
         padding: 15px;
     }
 
@@ -203,14 +217,16 @@ body.night-mode {
     }
 
     #camera-toggle {
-        top: 80px; 
+        top: 80px; /* Adjust spacing */
     }
 
+    /* Make text easier to read on small screens */
     .modal-project-description {
         font-size: 0.9rem;
         max-height: 250px;
     }
 }
+/* Mobile Controls Styling */
 #controls-wrapper {
     position: fixed;
     bottom: 30px;
@@ -220,7 +236,7 @@ body.night-mode {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    pointer-events: none; 
+    pointer-events: none; /* Allows clicks to pass through empty space */
 }
 
 .horizontal-controls {
@@ -229,7 +245,7 @@ body.night-mode {
 }
 
 .control-btn {
-    pointer-events: auto;
+    pointer-events: auto; /* Re-enable for the buttons */
     width: 60px;
     height: 60px;
     background: rgba(255, 255, 255, 0.2);
@@ -250,6 +266,7 @@ body.night-mode {
     transform: scale(0.9);
 }
 
+/* Hide on Desktop */
 @media (min-width: 769px) {
     #controls-wrapper {
         display: none;
@@ -259,7 +276,7 @@ body.night-mode {
     position: fixed;
     bottom: 20px;
     left: 20px;
-    z-index: 2000; 
+    z-index: 2000; /* Higher than everything else */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,7 +291,7 @@ body.night-mode {
 .control-btn {
     width: 50px;
     height: 50px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
     color: white;
     border: 2px solid #99aaff;
     border-radius: 8px;
@@ -282,8 +299,10 @@ body.night-mode {
     display: flex;
     align-items: center;
     justify-content: center;
-    touch-action: manipulation;
+    touch-action: manipulation; /* Prevents zooming on double tap */
+}
 
+/* Ensure icons are visible in buttons */
 .control-btn:active {
     background: #99aaff;
 }
@@ -297,13 +316,13 @@ body.night-mode {
     justify-content: space-between;
     padding: 15px 25px;
     background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
-    pointer-events: none; 
+    pointer-events: none; /* Let clicks pass through to 3D where there are no buttons */
 }
 
 .nav-group {
     display: flex;
     gap: 15px;
-    pointer-events: auto; 
+    pointer-events: auto; /* Enable clicks for buttons */
 }
 
 .quick-nav button, .resume-dl {
@@ -329,9 +348,10 @@ body.night-mode {
     gap: 15px;
     font-size: 1.5rem;
 }
+/* Container for the top-right controls to stack them neatly */
 .top-right-controls {
     position: fixed;
-    top: 110px; 
+    top: 110px; /* Increased from 80px to avoid stacked nav */
     right: 15px;
     display: flex;
     flex-direction: column;
@@ -339,12 +359,14 @@ body.night-mode {
     z-index: 1005;
 }
 
+/* Update your existing theme and camera buttons to remove their individual top/right positions */
 #theme-toggle, #camera-toggle {
-    position: static;
+    position: static; /* Let the container handle positioning */
     width: 50px;
     height: 50px;
 }
 
+/* Refined Nav Bar */
 /* --- BASE NAV (Shared) --- */
 .quick-nav {
     position: fixed;
@@ -376,18 +398,51 @@ body.night-mode {
 
 /* --- MOBILE LAYOUT (Only kicks in below 768px) --- */
 @media (max-width: 768px) {
+    /*trying to move stuff imp
+    fvfvfvjfv
+    vnjjxv
+    nfj jvjv
+    fnjvnjfjc*/
+    /* #theme-toggle {
+    position: fixed;
+    top: 0px;
+    right: 20px;}
+    #camera-toggle {
+    position: fixed;
+    top: 60px; /* Below the theme toggle */
+     /*right: 20px;} */
+    /* #camera-toggle {
+    position: fixed;
+    /* bottom: 30px;     /* The one at the very bottom */
+    /* right: 20px;
+} */
+/* 
+#theme-toggle {
+    position: fixed; */
+    /* bottom: 130px;    /* 20px (gap) + 100px (height of camera-toggle) + 10px (extra spacing) */ 
+    /* right: 20px;
+} */ 
+/* #theme-toggle, #camera-toggle {
+    position: static;
+    width: 50px;
+    height: 50px;
+    margin-top: 20px; 
+} 
+*/
 #theme-toggle, #camera-toggle {
         position: static; 
         margin: 0;
     }
 
+    /* 2. Create a container for the bottom-right corner */
     .top-right-controls {
-        top: auto;          
-        bottom: 20px;       
-        right: 20px;        
-        flex-direction: column-reverse;
+        top: auto;          /* Remove top alignment */
+        bottom: 20px;       /* Stick to bottom */
+        right: 20px;        /* Stick to right */
+        flex-direction: column-reverse; /* Put Camera on top of Theme or vice versa */
         gap: 15px;
     }
+    /* Mobile Controls Styling */
 #controls-wrapper {
     position: fixed;
     bottom: 30px;
@@ -397,26 +452,30 @@ body.night-mode {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    pointer-events: none; 
+    pointer-events: none; /* Allows clicks to pass through empty space */
 }
+    /*till here*/
+ /* --- HAMBURGER BUTTON --- */
 .menu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
         background: transparent;
         border: none;
-        color: var(--accent); 
-        font-size: 2.5rem;    
+        color: var(--accent); /* Using your #99aaff */
+        font-size: 2.5rem;    /* Large enough to see clearly */
         cursor: pointer;
         pointer-events: auto;
         z-index: 1100;
         line-height: 1;
     }
 
+    /* Logic to show/hide the spans */
     .menu-toggle .close {
         display: none;
     }
 
+    /* When the menu is open (active) */
     .menu-toggle.active .hamburger {
         display: none;
     }
@@ -426,8 +485,9 @@ body.night-mode {
     }
 
     .nav-menu {
+        /* This turns the menu into a hidden vertical drawer */
         position: absolute;
-        top: 60px; 
+        top: 60px; /* Exact height of the nav bar */
         left: 0;
         width: 100%;
         background: rgba(0, 0, 0, 0.95);
@@ -436,6 +496,7 @@ body.night-mode {
         padding: 20px;
         gap: 20px;
         
+        /* Visibility Logic */
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
@@ -459,5 +520,4 @@ body.night-mode {
         width: 100%;
         text-align: left;
     }
-}
 }
