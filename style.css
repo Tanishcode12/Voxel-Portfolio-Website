@@ -21,9 +21,7 @@
 .hidden{
     display:none;
 }
-/*modal*/
-/* Toggle Button Style */
-/*updated for button visual*/
+
 #theme-toggle {
     position: fixed;
     top: 20px;
